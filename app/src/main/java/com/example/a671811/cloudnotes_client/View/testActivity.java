@@ -11,16 +11,16 @@ import android.widget.ListView;
 import com.example.a671811.cloudnotes_client.Model.DAO.FakeDAO;
 import com.example.a671811.cloudnotes_client.R;
 
-public class NotesListActivity extends AppCompatActivity {
+public class testActivity extends AppCompatActivity {
 
-    ListView list;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_notes_list);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_test);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -31,9 +31,9 @@ public class NotesListActivity extends AppCompatActivity {
             }
         });
 
-        //list = (ListView) findViewById(R.id.notesList);
-        FakeDAO fakeDAO = new FakeDAO();
-        //list.setAdapter(new NotesAdapter(fakeDAO.getNotes(), this));
+        listView = (ListView)findViewById(R.id.listView);
+        FakeDAO fakeDao = new FakeDAO();
+        listView.setAdapter(new NotesAdapter(fakeDao.getNotes(), this.getApplicationContext()));
     }
 
 }

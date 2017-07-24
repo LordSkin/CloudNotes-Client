@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -79,7 +80,7 @@ public class NotesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        String title  = (String)(notes.get(position).getNote().subSequence(0,TITLE_LENGTH));
+        String title  = notes.get(position).getNote();//(String)(notes.get(position).getNote().subSequence(0,TITLE_LENGTH));
 
         View v = inflater.inflate(R.layout.note_cell, null);
         ((TextView)v.findViewById(R.id.Row)).setText(title);
