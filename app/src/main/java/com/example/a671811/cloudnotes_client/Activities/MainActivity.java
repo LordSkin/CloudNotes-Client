@@ -1,4 +1,4 @@
-package com.example.a671811.cloudnotes_client.View;
+package com.example.a671811.cloudnotes_client.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(this, testActivity.class);
+        Intent i = new Intent(this, NotesListActivity.class);
         startActivity(i);
     }
 }

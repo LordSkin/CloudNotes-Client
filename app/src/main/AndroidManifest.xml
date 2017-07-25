@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.NotesListActivity"
-            android:label="@string/title_activity_notes_list"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".View.testActivity"
+            android:name=".Activities.NotesListActivity"
             android:label="@string/title_activity_test"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

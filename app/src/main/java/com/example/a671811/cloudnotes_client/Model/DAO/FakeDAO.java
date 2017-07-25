@@ -8,62 +8,64 @@ import java.util.ArrayList;
  * Created by A671811 on 2017-07-24.
  */
 
-public class FakeDAO {
+public class FakeDAO implements NotesDao {
     ArrayList<Note> notes;
+    NotesResponseListener listener;
 
-    public FakeDAO() {
+    public FakeDAO(NotesResponseListener notesResponseListener) {
         notes = new ArrayList<Note>();
+        listener = notesResponseListener;
         notes.add(new Note("aaaaaaaaaaaaaa"));
         notes.add(new Note("bbbbbbbb"));
         notes.add(new Note("a345aaaaaaaaadr43r43f43f43rf4erf23e32raaaa"));
     }
 
-    public ArrayList<Note> getNotes()
+    public void  getNotes()
     {
-        return notes;
+        listener.getNotesResponse(notes);
     }
 
-    public Note getNote(int id)
+    public void getNote(int id)
     {
         if(notes.size()>id&&id>=0)
-            return notes.get(id);
-        else return null;
+            listener.getNoteResponse(notes.get(id));
+        else listener.getNoteResponse(null);
     }
 
-    public int addNote(String note)
+    public void addNote(String note)
     {
         notes.add(new Note(note));
-        return notes.size()-1;
+        listener.addNoteResponse(notes.size()-1);
     }
 
-    public boolean removeNote(int id)
+    public void removeNote(int id)
     {
         if(notes.size()>id&&id>=0)
         {
             notes.remove(id);
-            return true;
+            listener.removeNoteResponse(true);
         }
         else
         {
-            return false;
+            listener.removeNoteResponse(false);
         }
 
     }
 
-    public boolean updateNote(int id, String noteText) {
+    public void updateNote(int id, String noteText) {
         if(notes.size()>id&&id>=0)
         {
             notes.get(id).update(noteText);
-            return true;
+           listener.updateResponse(true);
         }
         else
         {
-            return false;
+            listener.updateResponse(false);
         }
 
     }
 
-    public void deleteAll() {
+    public void clearAll() {
         notes.clear();
     }
 
