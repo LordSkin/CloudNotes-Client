@@ -18,8 +18,6 @@ public interface NotesResponseListener {
 
     void removeNoteResponse(boolean b);
 
-    void clearAllResponse();
-
     void updateResponse(boolean ok);
 
     void onError(Exception e);

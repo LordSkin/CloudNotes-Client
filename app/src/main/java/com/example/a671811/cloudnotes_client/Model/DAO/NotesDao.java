@@ -10,6 +10,8 @@ public interface NotesDao {
 
     void getNote(int id);
 
+    void addNote(String note);
+
     void updateNote(int id, String s);
 
     void removeNote(int id);

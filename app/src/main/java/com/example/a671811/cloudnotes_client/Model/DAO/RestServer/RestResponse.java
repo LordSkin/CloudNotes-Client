@@ -8,11 +8,14 @@ public interface RestResponse {
 
     void notesListResponse(String s);
 
+    void addNoteResponse(String s);
+
     void noteResponse(String s);
 
     void removeResponse(String s);
 
     void updateResponse(String s);
 
-    void clearAllResponse(String s);
+    void error(Exception e);
+
 }
