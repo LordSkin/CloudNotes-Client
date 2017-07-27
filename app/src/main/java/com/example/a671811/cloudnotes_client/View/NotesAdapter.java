@@ -24,7 +24,7 @@ public class NotesAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
 
-    public static final int TITLE_LENGTH = 15;
+    public static final int TITLE_LENGTH = 12;
 
     public NotesAdapter(ArrayList<Note> notes, Context context) {
         this.notes = notes;
@@ -80,7 +80,12 @@ public class NotesAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        String title  = notes.get(position).getNote();//(String)(notes.get(position).getNote().subSequence(0,TITLE_LENGTH));
+
+        String title  = notes.get(position).getNote();
+        if(title.length()>TITLE_LENGTH+1)
+        {
+            title = title.substring(0,TITLE_LENGTH)+"...";
+        }
 
         View v = inflater.inflate(R.layout.note_cell, null);
         ((TextView)v.findViewById(R.id.Row)).setText(title);

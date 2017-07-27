@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.a671811.cloudnotes_client.R;
+import com.example.a671811.cloudnotes_client.View.Dialogs.EnterNoteDialog;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

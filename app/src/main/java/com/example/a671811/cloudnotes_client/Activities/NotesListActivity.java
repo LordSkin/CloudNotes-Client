@@ -16,12 +16,13 @@ import com.example.a671811.cloudnotes_client.Model.DAO.NotesDao;
 import com.example.a671811.cloudnotes_client.Model.DAO.NotesResponseListener;
 import com.example.a671811.cloudnotes_client.Model.DAO.RestServer.DataService;
 import com.example.a671811.cloudnotes_client.R;
+import com.example.a671811.cloudnotes_client.View.Dialogs.EnterNoteDialog;
 import com.example.a671811.cloudnotes_client.View.NotesAdapter;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class NotesListActivity extends AppCompatActivity implements NotesResponseListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class NotesListActivity extends AppCompatActivity implements NotesResponseListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, EnterNoteDialog.NoteAddedListener {
 
     ListView listView;
     ProgressBar progress;
@@ -82,25 +83,25 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
     @Override
     public void onError(Exception e) {
         progress.setVisibility(View.GONE);
-        Snackbar.make(this.listView, "Something went wrong :/", Snackbar.LENGTH_LONG)
+        Snackbar.make(this.listView, "Something went wrong :/ \n "+e, Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
     }
 
     @Override
     public void onClick(View v) {
-        progress.setVisibility(View.VISIBLE);
-        Random r = new Random();
-        String s = "";
-        for (int i =0; i<5; i++)
-        {
-            s+= r.nextInt(999);
-        }
-        notesDao.addNote(s);
+        EnterNoteDialog dialog = new EnterNoteDialog();
+        dialog.show(getFragmentManager(), "tekst3");
     }
 
     @Override
     public void onRefresh() {
         progress.setVisibility(View.VISIBLE);
         notesDao.getNotes();
+    }
+
+    @Override
+    public void onNoteAdded(String note) {
+        notesDao.addNote(note);
+        progress.setVisibility(View.VISIBLE);
     }
 }
