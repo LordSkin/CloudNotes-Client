@@ -11,7 +11,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.a671811.cloudnotes_client.Entity.Note;
-import com.example.a671811.cloudnotes_client.Model.DAO.FakeDAO;
 import com.example.a671811.cloudnotes_client.Model.DAO.NotesDao;
 import com.example.a671811.cloudnotes_client.Model.DAO.NotesResponseListener;
 import com.example.a671811.cloudnotes_client.Model.DAO.RestServer.DataService;
@@ -20,7 +19,6 @@ import com.example.a671811.cloudnotes_client.View.Dialogs.EnterNoteDialog;
 import com.example.a671811.cloudnotes_client.View.NotesAdapter;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class NotesListActivity extends AppCompatActivity implements NotesResponseListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, EnterNoteDialog.NoteAddedListener {
 
@@ -31,6 +29,7 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
     Toolbar myToolbar;
     SwipeRefreshLayout swipeRefreshLayout;
     String ipAddress;
+    NotesAdapter notesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,10 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
         fab = (FloatingActionButton) findViewById(R.id.fab);
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        notesAdapter = new NotesAdapter(new ArrayList<Note>(), this.getApplicationContext(), ipAddress);
 
+        listView.setOnItemClickListener(notesAdapter);
+        listView.setAdapter(notesAdapter);
         swipeRefreshLayout.setOnRefreshListener(this);
         setSupportActionBar(myToolbar);
         progress.setVisibility(View.VISIBLE);
@@ -53,11 +55,17 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
     }
 
 
-
     @Override
     public void getNotesResponse(ArrayList<Note> notes) {
-        listView.setAdapter(new NotesAdapter(notes, this.getApplicationContext()));
+        notesAdapter.update(notes);
         progress.setVisibility(View.GONE);
+        if(swipeRefreshLayout.isRefreshing())swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        notesDao.getNotes();
     }
 
     @Override
@@ -90,12 +98,12 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
     @Override
     public void onClick(View v) {
         EnterNoteDialog dialog = new EnterNoteDialog();
-        dialog.show(getFragmentManager(), "tekst3");
+        dialog.show(getFragmentManager(), "Add new note");
     }
 
     @Override
     public void onRefresh() {
-        progress.setVisibility(View.VISIBLE);
+        swipeRefreshLayout.setRefreshing(true);
         notesDao.getNotes();
     }
 
@@ -104,4 +112,6 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
         notesDao.addNote(note);
         progress.setVisibility(View.VISIBLE);
     }
+
+
 }

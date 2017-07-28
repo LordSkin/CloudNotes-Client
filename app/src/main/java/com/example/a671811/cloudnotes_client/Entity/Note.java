@@ -1,5 +1,6 @@
 package com.example.a671811.cloudnotes_client.Entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,16 +8,18 @@ import java.util.Date;
  * Created by A671811 on 2017-07-24.
  */
 
-public class Note {
+public class Note implements Serializable {
 
     private Date created;
     private Date updated;
     private String note;
+    private int id;
 
-    public Note(Date created, Date updated, String note) {
+    public Note(Date created, Date updated, String note, int id) {
         this.created = created;
         this.updated = updated;
         this.note = note;
+        this.id = id;
     }
 
     public Note() {
@@ -24,10 +27,15 @@ public class Note {
         updated = Calendar.getInstance().getTime();
     }
 
-    public Note(String note) {
+    public Note(String note, int id) {
         this.note = note;
         created = Calendar.getInstance().getTime();
         updated = Calendar.getInstance().getTime();
+        this.id =id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNote() {

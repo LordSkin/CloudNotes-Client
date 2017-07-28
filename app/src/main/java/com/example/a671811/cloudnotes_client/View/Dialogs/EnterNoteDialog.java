@@ -29,9 +29,9 @@ public class EnterNoteDialog extends DialogFragment {
         final EditText noteEdit = (EditText) editView.findViewById(R.id.dialogNoteText);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("tekst1")
+        builder.setMessage("New Note")
                 .setView(editView)
-                .setPositiveButton("tekst2", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onNoteAdded(noteEdit.getText().toString());
                     }

@@ -1,34 +1,37 @@
 package com.example.a671811.cloudnotes_client.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.a671811.cloudnotes_client.Activities.EditNoteActivity;
 import com.example.a671811.cloudnotes_client.Entity.Note;
 import com.example.a671811.cloudnotes_client.R;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 /**
  * Created by A671811 on 2017-07-24.
  */
 
-public class NotesAdapter extends BaseAdapter {
+public class NotesAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
     ArrayList<Note> notes;
     Context context;
     LayoutInflater inflater;
+    String ipAddress;
 
     public static final int TITLE_LENGTH = 12;
 
-    public NotesAdapter(ArrayList<Note> notes, Context context) {
+    public NotesAdapter(ArrayList<Note> notes, Context context, String ipAddress) {
         this.notes = notes;
         this.context = context;
+        this.ipAddress = ipAddress;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -90,5 +93,13 @@ public class NotesAdapter extends BaseAdapter {
         View v = inflater.inflate(R.layout.note_cell, null);
         ((TextView)v.findViewById(R.id.Row)).setText(title);
         return v;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent i = new Intent(context, EditNoteActivity.class);
+        i.putExtra("Note", notes.get(position));
+        i.putExtra("ipAddress", ipAddress);
+        context.startActivity(i);
     }
 }

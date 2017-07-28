@@ -15,9 +15,9 @@ public class FakeDAO implements NotesDao {
     public FakeDAO(NotesResponseListener notesResponseListener) {
         notes = new ArrayList<Note>();
         listener = notesResponseListener;
-        notes.add(new Note("aaaaaaaaaaaaaa"));
-        notes.add(new Note("bbbbbbbb"));
-        notes.add(new Note("a345aaaaaaaaadr43r43f43f43rf4erf23e32raaaa"));
+        notes.add(new Note("aaaaaaaaaaaaaa",0));
+        notes.add(new Note("bbbbbbbb",1));
+        notes.add(new Note("a345aaaaaaaaadr43r43f43f43rf4erf23e32raaaa",2));
     }
 
     public void  getNotes()
@@ -34,7 +34,7 @@ public class FakeDAO implements NotesDao {
 
     public void addNote(String note)
     {
-        notes.add(new Note(note));
+        notes.add(new Note(note,0));
         listener.addNoteResponse(notes.size()-1);
     }
 
@@ -67,6 +67,11 @@ public class FakeDAO implements NotesDao {
 
     public void clearAll() {
         notes.clear();
+    }
+
+    @Override
+    public void setListener(NotesResponseListener listener) {
+
     }
 
     public int size() {

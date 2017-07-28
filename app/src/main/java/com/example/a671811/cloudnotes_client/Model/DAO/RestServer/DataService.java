@@ -37,7 +37,7 @@ public class DataService implements RestResponse, NotesDao {
             for (int i=0; i<jsonArray.length(); i++)
             {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                result.add(new Note(new Date(jsonObject.getLong("created")), new Date(jsonObject.getLong("updated")), jsonObject.getString("note")));
+                result.add(new Note(new Date(jsonObject.getLong("created")), new Date(jsonObject.getLong("updated")), jsonObject.getString("note"), jsonObject.getInt("id")));
             }
             listener.getNotesResponse(result);
         }
@@ -76,7 +76,7 @@ public class DataService implements RestResponse, NotesDao {
         try
         {
             JSONObject jsonObject = new JSONObject(s);
-            listener.getNoteResponse((new Note(new Date(jsonObject.getLong("created")), new Date(jsonObject.getLong("updated")), jsonObject.getString("note"))));
+            listener.getNoteResponse((new Note(new Date(jsonObject.getLong("created")), new Date(jsonObject.getLong("updated")), jsonObject.getString("note"), jsonObject.getInt("id"))));
         }
         catch (Exception e)
         {
@@ -129,5 +129,10 @@ public class DataService implements RestResponse, NotesDao {
     @Override
     public void clearAll() {
         requestSender.deleteAll();
+    }
+
+    @Override
+    public void setListener(NotesResponseListener listener) {
+        this.listener = listener;
     }
 }

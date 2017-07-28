@@ -17,4 +17,6 @@ public interface NotesDao {
     void removeNote(int id);
 
     void clearAll();
+
+    void setListener(NotesResponseListener listener);
 }
