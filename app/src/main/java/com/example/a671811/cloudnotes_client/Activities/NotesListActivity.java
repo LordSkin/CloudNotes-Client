@@ -26,7 +26,6 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
     ProgressBar progress;
     FloatingActionButton fab;
     NotesDao notesDao;
-    Toolbar myToolbar;
     SwipeRefreshLayout swipeRefreshLayout;
     String ipAddress;
     NotesAdapter notesAdapter;
@@ -39,14 +38,12 @@ public class NotesListActivity extends AppCompatActivity implements NotesRespons
         listView = (ListView)findViewById(R.id.listView);
         progress = (ProgressBar) findViewById(R.id.progressBar1);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.refreshLayout);
         notesAdapter = new NotesAdapter(new ArrayList<Note>(), this.getApplicationContext(), ipAddress);
 
         listView.setOnItemClickListener(notesAdapter);
         listView.setAdapter(notesAdapter);
         swipeRefreshLayout.setOnRefreshListener(this);
-        setSupportActionBar(myToolbar);
         progress.setVisibility(View.VISIBLE);
         fab.setOnClickListener(this);
         notesDao = new DataService(this, this, ipAddress);

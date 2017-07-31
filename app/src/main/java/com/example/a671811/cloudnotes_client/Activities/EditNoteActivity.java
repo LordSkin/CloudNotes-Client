@@ -7,7 +7,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.a671811.cloudnotes_client.Activities.NotesListActivity;
@@ -26,6 +28,8 @@ public class EditNoteActivity extends AppCompatActivity implements View.OnClickL
     TextView updated, created;
     EditText noteEdit;
     NotesDao notesDao;
+    Toolbar toolbar;
+    ImageButton deleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +39,31 @@ public class EditNoteActivity extends AppCompatActivity implements View.OnClickL
         updated = (TextView)findViewById(R.id.updatedLabel);
         created = (TextView)findViewById(R.id.createdLabel);
         noteEdit = (EditText)findViewById(R.id.noteTextEdit);
+        toolbar = (Toolbar)findViewById(R.id.my_toolbar2);
+        deleteButton = (ImageButton) findViewById(R.id.deleteNote);
 
+        deleteButton.setOnClickListener(this);
         fab.setOnClickListener(this);
         note = (Note)getIntent().getSerializableExtra("Note");
         created.setText("Created: "+note.getCreated());
         updated.setText("Updated: "+note.getUpdated());
         noteEdit.setText(note.getNote());
+        setSupportActionBar(toolbar);
         notesDao = new DataService(this, this, getIntent().getStringExtra("ipAddress"));
 
     }
 
     @Override
     public void onClick(View v) {
-        notesDao.updateNote(note.getId(), noteEdit.getText().toString());
+
+        if(v.getId()==R.id.fab)
+        {
+            notesDao.updateNote(note.getId(), noteEdit.getText().toString());
+        }
+        else
+        {
+            notesDao.removeNote(note.getId());
+        }
     }
 
     @Override
@@ -68,12 +84,12 @@ public class EditNoteActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void removeNoteResponse(boolean b) {
 
+        finish();
     }
 
     @Override
     public void updateResponse(boolean ok) {
-        Snackbar.make(this.noteEdit, "Note updatd successfully", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+
         finish();
     }
 
